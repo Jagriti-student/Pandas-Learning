@@ -166,3 +166,153 @@ print("Total revenue is : \n",df["Revenue"].sum())
 
 print("Average revenue is : \n",df["Revenue"].mean())
 
+print("Highest revenue value is : ",df["Revenue"].max())
+
+print("Lowest revenue value is : ",df["Revenue"].min())
+
+print("Total Quantity Sold is : ",df["Quantity"].sum())
+
+print("Average price is : ",df["Price"].mean())
+
+print("Maximum profit is : ",df["Profit"].max())
+
+print("Minimum profit is : ",df["Profit"].min())
+
+print("Unique Products are : ",df["Product"].unique())
+
+print("Count of Unique Products are : ",df["Product"].nunique())
+
+print("Value count of products is : ",df["Product"].value_counts())
+
+#----------------------------PART 10 — Sorting-------------------------
+print("Revenue in descending order is : ",df["Revenue"].sort_values(ascending=False))
+print("Top 3 highest revenue orders are : ",df["Revenue"][0:3])
+
+print("Profit in descending order is : ",df["Profit"].sort_values(ascending=False))
+
+print("Quantity in ascending order is : ",df["Quantity"].sort_values())
+
+print("Price in descending order is : ",df["Price"].sort_values(ascending=False))
+
+#-----------------------------PART 11 — apply()----------------------------
+
+def performance(Revenue):
+    if(Revenue>=50000):
+        return "High Revenue"
+    elif (Revenue>=20000 & Revenue<50000):
+        return "Medium Revenue"
+    else:
+        return "Low Revenue"
+
+df["Performance"]=df["Revenue"].apply(performance)
+
+print("Performance of orders acc. to Revenue : \n",df)
+
+#----------------------------PART 12 — map() and replace()---------------------
+df3["mode"]=df3["Payment_Mode"].map(
+    {
+        "UPI": "Digitally",
+        "Card": "Credit or Debit",
+        "Cash": "Offline"
+    }
+)
+print(df3)
+
+print(df3.replace(
+    {
+        "Digitally": "Online"
+    }
+))
+
+#----------------------------PART 13 — GROUPBY------------------------------
+print("Revenue by Category : ",df.groupby("Category")["Revenue"].sum())
+
+print("Profit by Category : ",df.groupby("Category")["Profit"].sum())
+
+print("Quantity by Product : ",df.groupby("Product")["Quantity"].sum())
+
+print("Revenue by Product : ",df.groupby("Product")["Revenue"].sum())
+
+df_new=df.merge(df1,on="Customer_ID",how="left")
+print(df_new)
+print("Revenue by City : ",df_new.groupby("City")["Revenue"].sum())
+
+print("Revenue by Customer ID : ",df_new.groupby("Customer_ID")["Revenue"].sum())
+
+#----------------------------------PART 14 — agg()--------------------------------
+print("Aggregation of revenue by products : ",df.groupby("Category")["Revenue"].agg(["sum","min","max","mean","count"]))
+
+#----------------------------------PART 15 — transform()-----------------------
+df["Category_Total_Revenue"] = df.groupby("Category")["Revenue"].transform("sum")
+print("Revenue by categoy using transform : ",df)
+
+#--------------------------PART 16 — MERGE------------------------
+df_n1=df.merge(df2,on="Category",how="left")
+print("Merge orders and products dataframe : \n",df_n1)
+
+df_n2=df.merge(df3,on="Order_ID",how="right")
+print("Merge orders and payments dataframe : \n",df_n2)
+
+df_n3=df.merge(df1,on="Customer_ID",how="outer")
+print("Merge order and customer dataset : \n",df_n3)
+
+#-----------------------------PART 17 — CONCAT---------------------------
+sales1=pd.DataFrame([
+    [60,70,80],
+    [100,90,85],
+    [45,98,97]
+])
+sales2=pd.DataFrame([
+    [85,97,86],
+    [75,78,68],
+    [94,95,89]
+])
+print("Concatenation of 2 sales data add using new row : \n",pd.concat([sales1,sales2],axis=0,ignore_index=True))
+print("Concatenation of 2 sales data add using new columns : \n",pd.concat([sales1,sales2],axis=1,ignore_index=True))
+
+#-----------------------------PART 18 — Query--------------------------
+print("Revenue greater than 20000 : ",df.query("Revenue>20000"))
+
+#-----------------------------PART 19 — Indexing------------------------
+print("using Set index fucntion : ",df.set_index("Order_ID"))
+
+print("Using Reset Index Function : ",df.reset_index())
+
+#------------------------PART 20 — Pivot Table--------------------------
+df["Order_Date"]=pd.to_datetime(df["Order_Date"])
+df["Month"]=df["Order_Date"].dt.month_name()
+pivot=pd.pivot_table(
+    df,
+    values="Revenue",
+    index="Order_ID",
+    columns="Month",
+    aggfunc="sum"
+)
+print("Pivot fucntion using : \n",pivot)
+
+#---------------------------------PART 21 — Crosstab-----------------------
+city_category = pd.crosstab(
+    df1["City"],
+    df["Category"]
+)
+print("Orders by city and category : \n",city_category)
+
+#-----------------------------------PART 22 — Melt-----------------------------
+sales = pd.DataFrame({
+    "Product": ["Laptop", "Phone", "Tablet"],
+    "January": [50000, 30000, 20000],
+    "February": [60000, 35000, 25000],
+    "March": [55000, 40000, 30000]
+})
+melted_sales=pd.melt(
+    sales,
+    id_vars="Product",
+    var_name="Month",
+    value_name="Sales"
+)
+print("Sales in long format is : ",melted_sales)
+
+
+#-----------------------------------PART 23 — Correlation-----------------------
+cor=df[["Quantity","Price","Profit","Revenue"]].corr()
+print("Correlation between Quantity, Price, Profit, Revenue is : \n",cor)
