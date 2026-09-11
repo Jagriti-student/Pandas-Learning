@@ -127,6 +127,26 @@ Through consistent practice, I'm working on developing the ability to:
 > 🚀 **Status: Learning, practicing, and improving every day.**
 
 ---
+## 🚀 Practical Project
+
+### 🛒 E-Commerce Sales & Customer Analytics
+
+As part of my Pandas learning journey, I built a practical **E-Commerce Sales & Customer Analytics** project to apply the concepts I learned on a real-world style dataset.
+
+The project includes:
+
+* 🧾 Order & sales analysis
+* 👥 Customer analysis
+* 📦 Product analysis
+* 💳 Payment analysis
+* 📊 Revenue & profit analysis
+* 🔍 GroupBy, Aggregation & Transform
+* 🔗 Merge & Concat
+* 📅 Date & Time analysis
+* 🧹 Data cleaning and manipulation
+
+> 💡 This project helped me move from learning individual Pandas functions to applying them together in a complete data-analysis workflow.
+
 
 ## ⚙️ Getting Started
 
